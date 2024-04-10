@@ -1,15 +1,15 @@
 variable "region" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "key_pair_name" {
-  type = string
+  type    = string
   default = ""
 }
 
 variable "key_pair_path" {
-  type = string
+  type    = string
   default = ""
 }
 
@@ -21,18 +21,27 @@ variable "security_group_name" {
 
 variable "server_port" {
   description = "The port the server will user for HTTP requests"
-  type = number
-  default = 80
+  type        = number
+  default     = 80
 }
 
 variable "image_id" {
   description = "The id of the machine image (AMI) to use for the server."
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "instance_type" {
   description = "instance type"
-  type = string
-  default = "t2.micro"
+  type        = string
+  default     = "t2.micro"
+}
+variable "asg_min_size" {
+  type = number
+  default = 1
+}
+
+variable "asg_max_size" {
+  type = number
+  default = 1
 }
