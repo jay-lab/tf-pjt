@@ -24,5 +24,5 @@ resource "aws_db_instance" "example" {
 }
 
 data "aws_secretsmanager_secret_version" "db_password" {
-  secret_id = "mysql-master-password-stage" # AWS SecretManager에 생성 되어있어야할 키값
+  secret_id = "mysql-master-password-stage" # AWS SecretManager에 생성 되어있어야할 키값(복수의 key-value json 객체 형태. 따라서 위와같이 decode & key를 활용해서 value에 접근 필요)
 }
