@@ -10,4 +10,4 @@ image_id            = "ami-051f8a213df8bc089"
 instance_type       = "t2.micro"
 
 asg_min_size = 2
-asg_max_size = 3
+asg_max_size = 2

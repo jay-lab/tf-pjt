@@ -26,10 +26,11 @@ resource "aws_db_instance" "example" {
   identifier_prefix = "terraform-db"
   engine = "mysql"
   allocated_storage = 10 # 스토리지 10 GB
-  instance_class = "db.t2.micro" # 1 CPU, 1 GB Memory
+  instance_class = "db.t3.micro" # 1 CPU, 1 GB Memory
   db_name = "example_database"
   username = "admin"
-  password = jsondecode(data.aws_secretsmanager_secret_version.db_password.secret_string)["key1"] # 보안암호 명 "mysql-master-password-stage"의 "key1" 이라는 key의 값
+  password = jsondecode(data.aws_secretsmanager_secret_version.db_password.secret_string)["mysql"] # 보안암호 명 "mysql-master-password-stage"의 "key1" 이라는 key의 값
+  skip_final_snapshot = true # DB Instance 삭제시 백업 skip
 }
 
 data "aws_secretsmanager_secret_version" "db_password" {
