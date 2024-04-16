@@ -34,14 +34,11 @@ variable "image_id" {
 variable "instance_type" {
   description = "instance type"
   type        = string
-  default     = "t2.micro"
 }
 variable "asg_min_size" {
   type = number
-  default = 1
 }
 
 variable "asg_max_size" {
   type = number
-  default = 1
 }

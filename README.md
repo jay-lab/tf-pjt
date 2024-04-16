@@ -18,6 +18,27 @@ Terraform Custom VPC
 
 <br>  
 
+### Database 구성
+1. Web Service > User Data 부분에서 DB 정보를 읽어내기 위한 내용이 있기에 Database를 먼저 구성
+2. DB 구성 전 AWS Secrets Manager 키 생성 필요
+> 사용한 암호명 : "mysql-master-password-stage"  
+> 사용한 암호의 키값 : "mysql"
+
+- init
+```shell
+(cd src/stage/data-stores/mysql && terraform init)
+```
+- plan
+```shell
+(cd src/stage/data-stores/mysql && terraform plan)
+```
+- apply
+```shell
+(cd src/stage/data-stores/mysql && terraform apply)
+```
+
+<br>
+
 ### Web Service 구성
 - init
 ```shell
@@ -34,23 +55,7 @@ Terraform Custom VPC
 
 <br>
 
-### Database 구성
-DB 구성 전 AWS Secrets Manager 키 생성 필요  
-> 사용한 암호명 : "mysql-master-password-stage"  
-> 사용한 암호의 키값 : "mysql"
 
-- init
-```shell
-(cd src/stage/data-stores/mysql && terraform init)
-```
-- plan
-```shell
-(cd src/stage/data-stores/mysql && terraform plan)
-```
-- apply
-```shell
-(cd src/stage/data-stores/mysql && terraform apply)
-```
 
 ---
 ### 구성한 인프라 제거

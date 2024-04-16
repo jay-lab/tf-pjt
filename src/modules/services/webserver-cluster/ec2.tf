@@ -1,6 +1,6 @@
 resource "aws_key_pair" "mykey" {
   key_name   = var.key_pair_name
-  public_key = file(var.key_pair_path)
+  public_key = file("${path.module}/${var.key_pair_path}")
 }
 
 
@@ -32,7 +32,7 @@ resource "aws_launch_template" "web" {
   vpc_security_group_ids = [aws_security_group.instance.id]
   key_name = aws_key_pair.mykey.key_name
 
-  user_data = base64encode(templatefile("user-data.tftpl", {
+  user_data = base64encode(templatefile("${path.module}/user-data.tftpl", {
     server_port = var.server_port
     db_address = data.terraform_remote_state.db.outputs.address
     db_port = data.terraform_remote_state.db.outputs.port

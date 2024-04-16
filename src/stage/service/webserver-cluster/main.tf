@@ -19,5 +19,20 @@ terraform {
 }
 
 provider "aws" {
-  region = var.region
+  region = "us-east-1"
+}
+
+module "webserver_cluster" {
+  source = "../../../modules/services/webserver-cluster"
+
+  key_pair_name = "mykey"
+  key_pair_path = "keypair/mykey.pub"
+
+  security_group_name = "terraform-example-instance"
+  server_port         = 8080
+  image_id            = "ami-051f8a213df8bc089"
+  instance_type       = "t2.micro"
+
+  asg_min_size = 2
+  asg_max_size = 2
 }
