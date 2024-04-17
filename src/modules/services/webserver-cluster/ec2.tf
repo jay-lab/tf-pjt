@@ -39,7 +39,7 @@ resource "aws_launch_template" "web" {
   }))
 }
 
-resource "aws_autoscaling_group" "example" {
+resource "aws_autoscaling_group" "web_asg" {
   name_prefix = "asg-web-"
   launch_template {
     id      = aws_launch_template.web.id
@@ -55,7 +55,7 @@ resource "aws_autoscaling_group" "example" {
 
   tag {
     key   = "Name"
-    value = "terraform-asg-example"
+    value = var.cluster_name
 
     propagate_at_launch = true # ASG에 의해 생성되는 모든 인스턴스가 이 태그를 상속.
     /* 스케일 아웃(인스턴스 추가) 또는 스케일 인(인스턴스 제거) 작업을 수행할 때, 이 속성이 true로 설정되어 있으면,
@@ -79,7 +79,7 @@ resource "aws_lb" "example" {
 
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.example.arn
-  port              = 80
+  port              = local.http_port
   protocol          = "HTTP"
 
   default_action {
