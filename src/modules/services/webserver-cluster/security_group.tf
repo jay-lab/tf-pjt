@@ -26,22 +26,22 @@ resource "aws_security_group" "instance" {
 
 resource "aws_security_group" "alb" {
   name = "${var.cluster_name}-alb"
-#  ▼  모듈화하면서 아래 인라인 방식를 별도 리소스 aws_security_group_rule을 사용하는 방식으로 변경
-#  # 인바운드 HTTP 트래픽 허용
-#  ingress {
-#    from_port   = local.http_port
-#    to_port     = local.http_port
-#    protocol    = local.tcp_protocol
-#    cidr_blocks = local.all_ips
-#  }
-#
-#  # 모든 아웃바운드 트래픽 허용
-#  egress {
-#    from_port   = 0
-#    to_port     = 0
-#    protocol    = "-1"
-#    cidr_blocks = ["0.0.0.0/0"]
-#  }
+  #  ▼  모듈화하면서 아래 인라인 방식를 별도 리소스 aws_security_group_rule을 사용하는 방식으로 변경
+  #  # 인바운드 HTTP 트래픽 허용
+  #  ingress {
+  #    from_port   = local.http_port
+  #    to_port     = local.http_port
+  #    protocol    = local.tcp_protocol
+  #    cidr_blocks = local.all_ips
+  #  }
+  #
+  #  # 모든 아웃바운드 트래픽 허용
+  #  egress {
+  #    from_port   = 0
+  #    to_port     = 0
+  #    protocol    = "-1"
+  #    cidr_blocks = ["0.0.0.0/0"]
+  #  }
 }
 
 # 이렇게 aws_security_group_rule을 사용하여 inbound 규칙을 추가했지만, module 외부에서(ex:root module)

@@ -26,16 +26,16 @@ resource "aws_key_pair" "mykey" {
 #}
 
 resource "aws_launch_template" "web" {
-  name_prefix = "lt-web-"
+  name_prefix            = "lt-web-"
   image_id               = var.image_id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.instance.id]
-  key_name = aws_key_pair.mykey.key_name
+  key_name               = aws_key_pair.mykey.key_name
 
   user_data = base64encode(templatefile("${path.module}/user-data.tftpl", {
     server_port = var.server_port
-    db_address = data.terraform_remote_state.db.outputs.address
-    db_port = data.terraform_remote_state.db.outputs.port
+    db_address  = data.terraform_remote_state.db.outputs.address
+    db_port     = data.terraform_remote_state.db.outputs.port
   }))
 }
 
@@ -45,7 +45,7 @@ resource "aws_autoscaling_group" "web_asg" {
     id      = aws_launch_template.web.id
     version = "$Latest"
   }
-  vpc_zone_identifier  = data.aws_subnets.default.ids
+  vpc_zone_identifier = data.aws_subnets.default.ids
 
   min_size = var.asg_min_size
   max_size = var.asg_max_size

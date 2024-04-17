@@ -10,11 +10,11 @@ terraform {
 
   backend "s3" {
     bucket = "terraform-state-sj"
-    key = "global/s3/terraform.tfstate" # 저장될 파일의 'S3 버킷 경로/상태파일명'
+    key    = "global/s3/terraform.tfstate" # 저장될 파일의 'S3 버킷 경로/상태파일명'
     region = "us-east-1"
 
     dynamodb_table = "terraform-locks" # 생성한 DynamoDB Table의 이름
-    encrypt = true
+    encrypt        = true
   }
 }
 
@@ -25,9 +25,9 @@ provider "aws" {
 module "webserver_cluster" {
   source = "../../../modules/services/webserver-cluster"
 
-  cluster_name = "webservers-stage"
+  cluster_name           = "webservers-stage"
   db_remote_state_bucket = "terraform-state-sj"
-  db_remote_state_key = "stage/data-stores/mysql/terraform.tfstate"
+  db_remote_state_key    = "stage/data-stores/mysql/terraform.tfstate"
 
   region = "us-east-1"
 
@@ -44,25 +44,25 @@ module "webserver_cluster" {
 }
 
 # 아래 리소스는 Prod 환경에만 설정. 업무시간에만 Prod 서버 수 늘리는 방식
- /* 참고로 "autoscaling_group_name"는 필수매개변수. 그런데,
+/* 참고로 "autoscaling_group_name"는 필수매개변수. 그런데,
  `autoscaling_group_name = aws_autoscaling_group.web_asg.name`
  ▲ 위 코드 사용 불가. root에서 child 리소스 참조 불가능하기 때문.
  이러한 문제를 해결하기 위해 child에 구현된 output을 이용하여 모듈이 반환하는 값을 사용할 수 있다 */
 resource "aws_autoscaling_schedule" "scale_out_during_business_hours" {
   scheduled_action_name  = "scale-out-during-business-hours"
-  min_size = 2
-  max_size = 10
-  desired_capacity = 10
-  recurrence = "0 9 * * *"
+  min_size               = 2
+  max_size               = 10
+  desired_capacity       = 10
+  recurrence             = "0 9 * * *"
   autoscaling_group_name = module.webserver_cluster.asg_name
 }
 
 resource "aws_autoscaling_schedule" "scale_in_at_night" {
   scheduled_action_name  = "scale-in-at-night"
-  min_size = 2
-  max_size = 10
-  desired_capacity = 10
-  recurrence = "0 17 * * *"
+  min_size               = 2
+  max_size               = 10
+  desired_capacity       = 10
+  recurrence             = "0 17 * * *"
   autoscaling_group_name = module.webserver_cluster.asg_name
 }
 

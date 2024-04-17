@@ -15,11 +15,11 @@ output "alb_dns_name" {
 
 # 이 값은 (ASG 서버 수 스케일링을 위해) root module에서 참조
 output "asg_name" {
-  value = aws_autoscaling_group.web_asg.name
+  value       = aws_autoscaling_group.web_asg.name
   description = "The name of the Auto Scaling Group"
 }
 
 output "alb_security_group_id" {
-  value = aws_security_group.alb.id
+  value       = aws_security_group.alb.id
   description = "The ID of the Security Group attached to the load balancer"
 }

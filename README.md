@@ -71,3 +71,28 @@ Terraform Custom VPC
 ```shell
 (cd src/global && terraform destroy)
 ```
+
+<br>
+
+---
+
+### 디렉터리 이동
+- Web Service
+```shell
+cd src/stage/service/webserver-cluster
+```
+
+- Module
+```shell
+cd src/modules/services/webserver-cluster
+```
+
+- Database
+```shell
+cd src/stage/data-stores/mysql
+```
+
+- S3 Backend
+```shell
+cd src/global
+```

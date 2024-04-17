@@ -46,17 +46,17 @@ variable "asg_max_size" {
 ## 모듈화 이후 추가 변수
 variable "cluster_name" {
   description = "The name to use for all the cluster resources"
-  type = string
+  type        = string
 }
 
 variable "db_remote_state_bucket" {
   description = "The name of the S3 bucket for the database's remote state in S3"
-  type = string
+  type        = string
 }
 
 variable "db_remote_state_key" {
   description = "The path for the database's remote state in S3"
-  type = string
+  type        = string
 }
 
 locals {
