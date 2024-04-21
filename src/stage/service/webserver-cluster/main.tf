@@ -43,7 +43,7 @@ module "webserver_cluster" {
   asg_max_size = 2
 }
 
-# 아래 리소스는 Prod 환경에만 설정. 업무시간에만 Prod 서버 수 늘리는 방식
+# 아래 리소스는 Prod 환경에만 설정될 코드. 업무시간에만 Prod 서버 수 늘리는 용도.
 /* 참고로 "autoscaling_group_name"는 필수매개변수. 그런데,
  `autoscaling_group_name = aws_autoscaling_group.web_asg.name`
  ▲ 위 코드 사용 불가. root에서 child 리소스 참조 불가능하기 때문.

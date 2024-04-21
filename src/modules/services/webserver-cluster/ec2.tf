@@ -110,7 +110,7 @@ resource "aws_lb_target_group" "asg" {
 
 resource "aws_lb_listener_rule" "asg" {
   listener_arn = aws_lb_listener.http.arn
-  priority     = 100
+  priority     = 100 # 우선 순위
 
   condition {
     path_pattern {
