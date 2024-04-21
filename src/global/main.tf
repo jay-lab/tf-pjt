@@ -14,11 +14,11 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "terraform-state-sj"
+  bucket        = "terraform-state-sj"
   force_destroy = true
-#  lifecycle {
-#    prevent_destroy = true
-#  }
+  #  lifecycle {
+  #    prevent_destroy = true
+  #  }
 }
 
 # 코드 이력 관리하기 위해 상태 파일의 버전 관리 활성화
@@ -50,9 +50,9 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encrypt_object" {
 # DynamoDB
 #############################################################################
 resource "aws_dynamodb_table" "terraform_locks" {
-  name = "terraform-locks"
+  name         = "terraform-locks"
   billing_mode = "PAY_PER_REQUEST"
-  hash_key = "LockID"
+  hash_key     = "LockID"
 
   attribute {
     name = "LockID"

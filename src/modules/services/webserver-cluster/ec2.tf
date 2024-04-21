@@ -1,6 +1,6 @@
 resource "aws_key_pair" "mykey" {
   key_name   = var.key_pair_name
-  public_key = file(var.key_pair_path)
+  public_key = file("${path.module}/${var.key_pair_path}")
 }
 
 
@@ -26,26 +26,26 @@ resource "aws_key_pair" "mykey" {
 #}
 
 resource "aws_launch_template" "web" {
-  name_prefix = "lt-web-"
+  name_prefix            = "lt-web-"
   image_id               = var.image_id
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.instance.id]
-  key_name = aws_key_pair.mykey.key_name
+  key_name               = aws_key_pair.mykey.key_name
 
-  user_data = base64encode(templatefile("user-data.tftpl", {
+  user_data = base64encode(templatefile("${path.module}/user-data.tftpl", {
     server_port = var.server_port
-    db_address = data.terraform_remote_state.db.outputs.address
-    db_port = data.terraform_remote_state.db.outputs.port
+    db_address  = data.terraform_remote_state.db.outputs.address
+    db_port     = data.terraform_remote_state.db.outputs.port
   }))
 }
 
-resource "aws_autoscaling_group" "example" {
+resource "aws_autoscaling_group" "web_asg" {
   name_prefix = "asg-web-"
   launch_template {
     id      = aws_launch_template.web.id
     version = "$Latest"
   }
-  vpc_zone_identifier  = data.aws_subnets.default.ids
+  vpc_zone_identifier = data.aws_subnets.default.ids
 
   min_size = var.asg_min_size
   max_size = var.asg_max_size
@@ -55,7 +55,7 @@ resource "aws_autoscaling_group" "example" {
 
   tag {
     key   = "Name"
-    value = "terraform-asg-example"
+    value = var.cluster_name
 
     propagate_at_launch = true # ASG에 의해 생성되는 모든 인스턴스가 이 태그를 상속.
     /* 스케일 아웃(인스턴스 추가) 또는 스케일 인(인스턴스 제거) 작업을 수행할 때, 이 속성이 true로 설정되어 있으면,
@@ -79,7 +79,7 @@ resource "aws_lb" "example" {
 
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.example.arn
-  port              = 80
+  port              = local.http_port
   protocol          = "HTTP"
 
   default_action {
@@ -110,7 +110,7 @@ resource "aws_lb_target_group" "asg" {
 
 resource "aws_lb_listener_rule" "asg" {
   listener_arn = aws_lb_listener.http.arn
-  priority     = 100
+  priority     = 100 # 우선 순위
 
   condition {
     path_pattern {

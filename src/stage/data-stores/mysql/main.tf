@@ -10,11 +10,11 @@ terraform {
 
   backend "s3" {
     bucket = "terraform-state-sj"
-    key = "stage/data-stores/mysql/terraform.tfstate" # 저장될 파일의 'S3 버킷 경로/상태파일명'
+    key    = "stage/data-stores/mysql/terraform.tfstate" # 저장될 파일의 'S3 버킷 경로/상태파일명'
     region = "us-east-1"
 
     dynamodb_table = "terraform-locks" # 생성한 DynamoDB Table의 이름
-    encrypt = true
+    encrypt        = true
   }
 }
 
@@ -23,14 +23,14 @@ provider "aws" {
 }
 
 resource "aws_db_instance" "example" {
-  identifier_prefix = "terraform-db"
-  engine = "mysql"
-  allocated_storage = 10 # 스토리지 10 GB
-  instance_class = "db.t3.micro" # 1 CPU, 1 GB Memory
-  db_name = "example_database"
-  username = "admin"
-  password = jsondecode(data.aws_secretsmanager_secret_version.db_password.secret_string)["mysql"] # 보안암호 명 "mysql-master-password-stage"의 "key1" 이라는 key의 값
-  skip_final_snapshot = true # DB Instance 삭제시 백업 skip
+  identifier_prefix   = "terraform-db"
+  engine              = "mysql"
+  allocated_storage   = 10            # 스토리지 10 GB
+  instance_class      = "db.t3.micro" # 1 CPU, 1 GB Memory
+  db_name             = "example_database"
+  username            = "admin"
+  password            = jsondecode(data.aws_secretsmanager_secret_version.db_password.secret_string)["mysql"] # 보안암호 명 "mysql-master-password-stage"의 "mysql" 이라는 key의 값
+  skip_final_snapshot = true                                                                                  # DB Instance 삭제시 백업 skip
 }
 
 data "aws_secretsmanager_secret_version" "db_password" {
