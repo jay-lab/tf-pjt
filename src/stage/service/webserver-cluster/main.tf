@@ -25,6 +25,11 @@ provider "aws" {
 module "webserver_cluster" {
   source = "../../../modules/services/webserver-cluster"
 
+  /* git repository의 모듈 + 특정 Tag 시점 참조 방식
+  1. source 수정시 terraform init 재적용 필요
+  2. 로컬 테스트환경에서는 위의 로컬 파일 경로 참조 방식으로 진행 */
+#  source = "github.com/jay-lab/tf-pjt//src/modules/services/webserver-cluster?ref=v0.0.2"
+
   cluster_name           = "webservers-stage"
   db_remote_state_bucket = "terraform-state-sj"
   db_remote_state_key    = "stage/data-stores/mysql/terraform.tfstate"
