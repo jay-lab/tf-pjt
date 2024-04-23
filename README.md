@@ -96,3 +96,15 @@ cd src/stage/data-stores/mysql
 ```shell
 cd src/global
 ```
+
+<br>
+
+---
+
+### Git Tag 설정
+```shell
+git tag -a "v0.0.1" -m "First release of webserver-cluster module"
+```
+```shell
+git push --follow-tags
+```
