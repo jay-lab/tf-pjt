@@ -3,7 +3,7 @@ resource "aws_iam_user" "example01" {
   name = "neo"
 }
 
-# ✨plan 결과✨
+# ✨✨✨✨✨ plan 결과 ✨✨✨✨✨
 # aws_iam_user.example[0] will be created
 #+ resource "aws_iam_user" "example" {
 #+ arn           = (known after apply)
@@ -46,7 +46,7 @@ resource "aws_iam_user" "example02" {
   name = "neo.${count.index}"
 }
 
-# ✨plan 결과✨
+# ✨✨✨✨✨ plan 결과 ✨✨✨✨✨
 ## aws_iam_user.example02[0] will be created
 #+ resource "aws_iam_user" "example02" {
 #+ arn           = (known after apply)
@@ -95,7 +95,7 @@ resource "aws_iam_user" "example03" {
   name = var.user_names[count.index]
 }
 
-# ✨plan 결과✨
+# ✨✨✨✨✨ plan 결과 ✨✨✨✨✨
 ## aws_iam_user.example03[0] will be created
 #+ resource "aws_iam_user" "example03" {
 #+ arn           = (known after apply)
@@ -133,14 +133,14 @@ output "neo_arn" {
   value = aws_iam_user.example03[0].arn
   description = "Neo 유저의 ARN 조회"
 }
-# ✨plan 결과✨
+# ✨✨✨✨✨ plan 결과 ✨✨✨✨✨
 #+ neo_arn  = (known after apply)
 
 output "all_arns" {
   value = aws_iam_user.example03[*].arn
   description = "전체 유저의 ARN 조회"
 }
-# ✨plan 결과✨
+# ✨✨✨✨✨ plan 결과 ✨✨✨✨✨
 #+ all_arns = [
 #+ (known after apply),
 #+ (known after apply),
