@@ -1,6 +1,6 @@
 /* [ Dynamic block ]
 리소스를 반복적으로 여러개 생성(for_each의 기능)하는게 아니라
-특정 리소스 안에있는  block 인자만을 반복 생성하는 것 */
+특정 리소스 안에있는  block 인자만을 반복 생성하기 위한 방법 */
 variable "security_group_ingress" {
   type = map(object({
     description = string
