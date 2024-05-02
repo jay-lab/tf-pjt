@@ -39,7 +39,7 @@ variable "hero_thousand_faces" {
     morpheus = "mentor"
   }
 }
-# map의 key, value를 가지고 가공된 list 값 구성하기
+# map의 key, value를 가지고 가공된 list 값 구성하기 (대괄호가 사용되었듯 return 타입이 list.)
 output "bios" {
   value = [for name, role in var.hero_thousand_faces : "${name} is the ${role}"]
 }
@@ -50,7 +50,7 @@ output "bios" {
 #  "trinity is the love interest",
 #]
 
-# map의 key, value 가공하기
+# map의 key, value 가공하기 (중괄호가 사용되었듯 return 타입이 map.)
 output "upper_roles" {
   value = { for name, role in var.hero_thousand_faces : upper(name) => upper(role) }
 }
@@ -59,6 +59,19 @@ output "upper_roles" {
 #  MORPHEUS = "MENTOR"
 #  NEO      = "HERO"
 #  TRINITY  = "LOVE INTEREST"
+#}
+
+# ☀️☀️☀️위 표현식을 응용하면 loop_test_03.tf 파일에 정리한 Dynamic Block에 대해서도 필터링&가공된 데이터로 loop를 적용할 수 있다.☀️☀️☀️
+#dynamic "ingress" {
+#  for_each = for_each = var.security_group_ingress ⬅️ before
+#  for_each = { for key, value in var.security_group_ingress : key => upper(value) if key != "Name" } ⬅️ after
+#  content {
+#    description = ingress.value["description"]
+#    protocol    = ingress.value["protocol"]
+#    from_port   = ingress.value["from_port"]
+#    to_port     = ingress.value["to_port"]
+#    cidr_blocks = ingress.value["cidr_blocks"]
+#  }
 #}
 
 
